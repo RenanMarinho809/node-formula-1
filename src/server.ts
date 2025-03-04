@@ -1,11 +1,17 @@
 import fastify from "fastify";
 import cors from '@fastify/cors';
+import dotenv from 'dotenv';
 import { teams } from "./F1teams/team";
 import { drivers } from "./F1drivers/driver";
+import { HttpStatuscode } from "./utils/httpstatuscode";
+
 
 
 
 const server = fastify({ logger: true });
+
+
+dotenv.config();
 
 server.register(cors, {
   origin: ["https://www.formula1.com/en/racing/2025/pre-season-testing"]
@@ -17,12 +23,12 @@ server.register(cors, {
 
 
 server.get("/teams", async(request, response)=> {
-     response.type("application/json").code(200)
+     response.type("application/json").code(HttpStatuscode.OK)
      return {teams};
 });
 
 server.get("/drivers", async( request , response ) => {
-    response.type("application/json").code(200) 
+    response.type("application/json").code(HttpStatuscode.OK) 
     return {drivers};
 });
 
@@ -35,14 +41,14 @@ server.get<{Params: DriverParams}>("/drivers/:id", async(request , response) => 
      const driver = drivers.find((d) => d.id === id);
 
      if(!driver){
-          response.type("application/json").code(404)
+          response.type("application/json").code(HttpStatuscode.NotFound)
          return { error: "Driver not found"}
      }else{
-          response.type("application/json").code(200) 
+          response.type("application/json").code(HttpStatuscode.OK) 
           return { driver} 
      }
 });
 
-server.listen({port: 3333}, () => {
-    console.log("Server init")
+server.listen({ port: Number(process.env.PORT) }, () => {
+  console.log("Server init");
 });

@@ -20,6 +20,8 @@
   },
   "dependencies": {
     "@fastify/cors": "^9.0.1",
+    "@types/dotenv": "^6.1.1",
+    "dotenv": "^16.4.7",
     "fastify": "^4.26.2"
   }
 }
