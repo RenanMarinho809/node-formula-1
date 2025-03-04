@@ -14,7 +14,7 @@ const server = fastify({ logger: true });
 dotenv.config();
 
 server.register(cors, {
-  origin: ["https://www.formula1.com/en/racing/2025/pre-season-testing"]
+  origin: ["https://www.formula1.com"]
 })
 
 
